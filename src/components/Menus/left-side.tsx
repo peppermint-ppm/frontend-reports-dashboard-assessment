@@ -9,7 +9,7 @@ export const LeftSideMenu: React.FC<Props> = ({ }) => {
   const router = useRouter();
 
   return (
-    <nav className={`fixed top-0 left-0 w-[200px] h-[100vh] px-[2rem] py-[2rem] bg-[#F7F8F9] flex flex-col items-start`}>
+    <nav className={`sticky top-0 left-0 w-[200px] h-[100vh] px-[2rem] py-[0.75rem] bg-[#F7F8F9] flex flex-col items-start`}>
       <div className="w-[120px] h-[30px] mb-[30px]">
         <img
           src="/images/peppermint-wordmark.png"
