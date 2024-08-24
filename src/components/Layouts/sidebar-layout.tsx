@@ -17,7 +17,7 @@ export const SideBarLayout: React.FC<Props> = ({ children }) => {
       </div>
       
         <div className={`fixed top-0 right-0 duration-300 z-[10001] max-w-0 overflow-hidden ${openNav===true && "max-w-[200px]"}`}>
-          <LeftSideMenu/>
+          <LeftSideMenu setOpen={setOpenNav}/>
         </div>
       <nav className="lg:hidden sticky border-b-2 bg-white top-0 py-4 px-3 ">
         <div className="flex w-full justify-between">

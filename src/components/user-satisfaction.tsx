@@ -58,7 +58,7 @@ export const UserSatisfaction = ({ metrics }: Props) => {
               </span>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row gap-6 justify-between lg:items-center">
+          <div className="flex flex-col xl:flex-row gap-6 justify-between xl:items-center">
             {metricsArray.map((metric, index) => (
               <div
                 key={index}

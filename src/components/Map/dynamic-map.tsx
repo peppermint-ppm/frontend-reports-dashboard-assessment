@@ -12,9 +12,7 @@ const { MapContainer } = ReactLeaflet;
 const DynamicMap = ({ children, className, width, height, ...rest }:any) => {
 
 
-  // if ( className ) {
-  //   mapClassName = `${mapClassName} ${className}`;
-  // }
+ 
 
   useEffect(() => {
     (async function init() {

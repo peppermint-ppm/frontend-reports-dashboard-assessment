@@ -3,9 +3,11 @@ import { useRouter } from "next/router"
 import { HomeIcon } from "../Icons/home-icon"
 import { ReportsIcon } from "../Icons/reports-icon"
 
-type Props = {}
+type Props = {
+  setOpen?:React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export const LeftSideMenu: React.FC<Props> = ({ }) => {
+export const LeftSideMenu: React.FC<Props> = ({setOpen }) => {
   const router = useRouter();
 
   return (
@@ -29,6 +31,9 @@ export const LeftSideMenu: React.FC<Props> = ({ }) => {
         <ul className="lg:mt-[2rem] mt-12 space-y-2">
           <li
             onClick={() => {
+              if (setOpen) {
+                setOpen(false)
+              }
               router.prefetch("/dashboard")
               setTimeout(() => router.push("/dashboard"), 350)
             }}
@@ -43,6 +48,9 @@ export const LeftSideMenu: React.FC<Props> = ({ }) => {
 
           <li
             onClick={() => {
+              if (setOpen) {
+                setOpen(false)
+              }
               router.prefetch("/dashboard/reports")
               setTimeout(() => router.push("/dashboard/reports"), 350)
             }}
