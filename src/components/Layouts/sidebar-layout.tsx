@@ -11,10 +11,11 @@ export const SideBarLayout: React.FC<Props> = ({ children }) => {
   const [openNav, setOpenNav]= React.useState(false)
   return (
     <div className={`lg:flex  items-start relative w-full  `}>
-      <div className="hidden lg:block">
+      <div className="hidden sticky top-0 lg:block">
 
       <LeftSideMenu />
       </div>
+      
         <div className={`fixed top-0 right-0 duration-300 z-[10001] max-w-0 overflow-hidden ${openNav===true && "max-w-[200px]"}`}>
           <LeftSideMenu/>
         </div>

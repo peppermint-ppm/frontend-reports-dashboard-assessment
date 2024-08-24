@@ -5,12 +5,40 @@ import { TestReport } from "@/types";
 import { CompletionRate } from "./completion-rate";
 import { UserSatisfaction } from "./user-satisfaction";
 import { DeviceUsage } from "./device-usage";
+
 import Map from "./Map/map";
-import { iconPerson } from "./Icons/marker-icon";
 
 import geoData from "@/geoJson.json";
-import { divIcon } from "leaflet";
+import L, {
+  divIcon,
+  GeoJSON,
+  GeoJSONOptions,
+  TileLayer,
+  Marker,
+  Popup,
+} from "leaflet";
+import {
+  TileLayerProps,
+  GeoJSONProps,
+  MarkerProps,
+  PopupProps,
+} from "react-leaflet";
+import { GeoJsonObject, GeoJsonTypes } from "geojson";
 
+
+type TileLayerType = import("react").ForwardRefExoticComponent<
+  TileLayerProps & import("react").RefAttributes<TileLayer>
+>;
+type GeoJsonType = import("react").ForwardRefExoticComponent<
+  GeoJSONProps &
+    import("react").RefAttributes<GeoJSON<any, import("geojson").Geometry>>
+>;
+type MarkerType = import("react").ForwardRefExoticComponent<
+  MarkerProps & import("react").RefAttributes<Marker<any>>
+>;
+type PopupType = import("react").ForwardRefExoticComponent<
+  PopupProps & import("react").RefAttributes<Popup>
+>;
 type Props = Omit<TestReport, "testInfo">;
 export const DemographicsComponent = ({
   metrics,
@@ -30,12 +58,11 @@ export const DemographicsComponent = ({
     }));
   }
   geoData.features = addCountToData();
-  console.log(geoData);
 
   function getColor(d: number) {
     return d > 10 ? "#635BFF" : d >= 5 ? "#635BFF4D" : "#635BFF1A";
   }
-  function style(feature) {
+  function style(feature: (typeof geoData)["features"] & { count: number }) {
     return {
       fillColor: getColor(feature.count),
       weight: 0.1,
@@ -47,11 +74,11 @@ export const DemographicsComponent = ({
   }
 
   function convertDate() {
-    const date= new Date();
-  const dateString=  new Intl.DateTimeFormat('en-GB', {
-      dateStyle: 'short',
-      timeStyle: 'short',
-    }).format(date)
+    const date = new Date();
+    const dateString = new Intl.DateTimeFormat("en-GB", {
+      dateStyle: "short",
+      timeStyle: "short",
+    }).format(date);
 
     return dateString;
   }
@@ -74,9 +101,7 @@ export const DemographicsComponent = ({
                 />
               </div>
               <div className="p-[20px_0_32px] border-b">
-                <UserSatisfaction
-                 metrics={metrics}
-                />
+                <UserSatisfaction metrics={metrics} />
               </div>
               <div className="p-[20px_0_32px]">
                 <DeviceUsage devices={deviceBreakdown} />
@@ -89,39 +114,68 @@ export const DemographicsComponent = ({
                   <p className="text-[#5469D4]">View</p>
                 </div>
                 <div className="  rounded-lg  lg:rounded-none overflow-clip">
-                  <Map
-                    width="800"
-                    height="500"
-                    style={{ backgroundColor: "white" }}
-                    center={[locationBreakdown[0].lat, locationBreakdown[0].long]}
-                    zoom={0.5}
-                  >
-                    {({ TileLayer, Marker, Popup, GeoJSON }) => (
-                      <>
-                        <TileLayer
-                          url="https://{s}.basemaps.cartocdn.com/rastertiles/LIGHT/{z}/{x}/{y}.png"
-                          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        />
-                        <GeoJSON
-                          attribution="&copy; credits due..."
-                          data={geoData}
-                          style={style}
-                        />
-                        {locationBreakdown.map((data) => {
-                          return (
-                            <Marker position={[data.lat, data.long]}>
-                              <Popup>
-                                {data.country}
-                                <span className="bg-success p-1 rounded">
-                                  {data.count}
-                                </span>
-                              </Popup>
-                            </Marker>
-                          );
-                        })}
-                      </>
-                    )}
-                  </Map>
+                  
+                    <Map
+                      width={800}
+                      height={500}
+                      style={{ backgroundColor: "white" }}
+                      center={[
+                        locationBreakdown[0].lat,
+                        locationBreakdown[0].long,
+                      ]}
+                      zoom={0.5}
+                    >
+                      {({
+                        TileLayer,
+                        Marker,
+                        Popup,
+                        GeoJSON,
+                      }: {
+                        TileLayer: TileLayerType;
+                        Marker: MarkerType;
+                        Popup: PopupType;
+                        GeoJSON: GeoJsonType;
+                      }) => (
+                        <>
+                          <TileLayer
+                            url="https://{s}.basemaps.cartocdn.com/rastertiles/LIGHT/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                          />
+                          <GeoJSON
+                            attribution="&copy; credits due..."
+                            data={geoData as unknown as GeoJsonObject}
+                            style={style as unknown as GeoJSONOptions}
+                          />
+                          {locationBreakdown.map((data) => {
+                            return (
+                              <Marker
+                              // icon={L.divIcon({
+                              //   iconSize: [12, 12],
+                              //   iconAnchor: [12 / 2, 12 + 9],
+                              //   className: "mymarker",
+                              //   html: "😁",
+                              // })}
+                                position={[Number(data.lat), Number(data.long)]}
+                              >
+                                <Popup
+                                  position={[
+                                    Number(data.lat),
+                                    Number(data.long),
+                                  ]}
+                                >
+                                  {data.country}
+                                  <span className="bg-success ml-2 p-1 rounded">
+                                    {data.count}
+                                  </span>
+                                </Popup>
+                                //{" "}
+                              </Marker>
+                            );
+                          })}
+                        </>
+                      )}
+                    </Map>
+                
                 </div>
               </div>
             </div>
