@@ -10,7 +10,7 @@ const DynamicMap = dynamic(() => import('./dynamic-map'), {
 const Map = (props) => {
   const { width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT } = props;
   return (
-    <div style={{ aspectRatio: width / height }}>
+    <div className='lg:h-[70%] h-[50vh] w-[100%]' style={{ aspectRatio: width / height }}>
       <DynamicMap {...props} />
     </div>
   )

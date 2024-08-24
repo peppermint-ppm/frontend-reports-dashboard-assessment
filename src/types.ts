@@ -6,6 +6,7 @@ export interface TestInfo {
 }
 
 export interface Metrics {
+  [key: string | number]: number; 
   totalTasks: number;
   taskCompletion: number;
   sus: number;

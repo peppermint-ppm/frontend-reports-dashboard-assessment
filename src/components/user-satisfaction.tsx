@@ -1,16 +1,56 @@
+"use client";
+
 import { Metrics } from "@/types";
 import Link from "next/link";
 import { InfoIcon } from "./Icons/info";
 
-type Props = Pick<Metrics, "ces" | "sus" | "nps">;
-export const UserSatisfaction = ({ sus, ces, nps }: Props) => {
+type Props = { metrics: Metrics };
+export const UserSatisfaction = ({ metrics }: Props) => {
+  function getVariableName(variable: number) {
+    let name;
+    const allKeys = Object.keys(metrics);
+
+    for (let i = 0; i <= allKeys.length; i++) {
+      if (metrics[allKeys[i]] === variable) {
+        name = allKeys[i];
+      }
+    }
+    return name;
+  }
+
+  const metricsArray = [metrics.ces, metrics.nps, metrics.sus];
+
+  const getRemarksFrommetric = (value: number) => {
+    if (value > 60) {
+      return {
+        text: "Grade B",
+        name: getVariableName(value),
+        bgColor: "bg-success",
+        textColor: "text-[#0E6245]",
+      };
+    } else if (value < 50 && value > 20) {
+      return {
+        text: "Good",
+        name: getVariableName(value),
+        bgColor: "bg-warning",
+        textColor: "text-[#9C3F0F]",
+      };
+    }
+    return {
+      text: "Average",
+      name: getVariableName(value),
+      bgColor: "bg-warning",
+      textColor: "text-[#9C3F0F]",
+    };
+  };
+
   return (
     <div>
-      <div className="flex flex-col gap-1.5">
-        <div className="flex flex-col gap-[7px]">
+      <div className="flex flex-col w-full gap-1.5">
+        <div className="flex flex-col gap-4 lg:gap-[7px]">
           <div className="flex justify-between items-center">
             <div className="flex gap-2 items-center">
-              <h5 className="text-sm leading-[1.06rem] font-medium">
+              <h5 className="text-xs lg:text-sm leading-[1.06rem] font-medium">
                 User satisfaction score
               </h5>{" "}
               <span>
@@ -18,44 +58,51 @@ export const UserSatisfaction = ({ sus, ces, nps }: Props) => {
               </span>
             </div>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-1.5">
-              <h5 className="text-xl leading-[1.60725rem] text-[#1A1F36] font-medium">{sus}</h5>{" "}
-              <div className="bg-success rounded p-[2px_6px]">Grade B</div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <h5 className="text-xl leading-[1.60725rem] text-[#1A1F36] font-medium">{nps}</h5>{" "}
-              <div className="bg-warning rounded p-[2px_6px]">Grade B</div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <h5 className="text-xl leading-[1.60725rem] text-[#1A1F36] font-medium">{ces}</h5>{" "}
-              <div className="bg-warning rounded p-[2px_6px]">Grade B</div>
-            </div>
+          <div className="flex flex-col lg:flex-row gap-6 justify-between lg:items-center">
+            {metricsArray.map((metric, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between lg:justify-start   lg:max-w-[100px] flex-wrap gap-1.5"
+              >
+                <h5 className="lg:text-xl text-sm  leading-[1.60725rem] text-[#1A1F36] font-medium">
+                  {metric}
+                </h5>{" "}
+                <div className="flex flex-row lg:hidden lg:flex-col gap-1.5">
+                  <div
+                    className={`   rounded font-medium text-xs  p-[2px_6px] ${
+                      getRemarksFrommetric(metric).bgColor
+                    } ${getRemarksFrommetric(metric).textColor}`}
+                  >
+                    {getRemarksFrommetric(metric).text}
+                  </div>
+                  <div className="flex gap-2 order-1 items-center">
+                    <h5 className="leading-[1.06rem] uppercase text-xs lg:text-sm">
+                      {getRemarksFrommetric(metric).name}
+                    </h5>{" "}
+                    <span>
+                      <InfoIcon className="inline" />
+                    </span>
+                  </div>{" "}
+                </div>
+                <div
+                  className={`   rounded font-medium text-xs hidden lg:block p-[2px_6px] ${
+                    getRemarksFrommetric(metric).bgColor
+                  } ${getRemarksFrommetric(metric).textColor}`}
+                >
+                  {getRemarksFrommetric(metric).text}
+                </div>
+                <div className="lg:flex gap-2 order-1 hidden  items-center">
+                  <h5 className="leading-[1.06rem] uppercase text-xs lg:text-sm">
+                    {getRemarksFrommetric(metric).name}
+                  </h5>{" "}
+                  <span>
+                    <InfoIcon className="inline" />
+                  </span>
+                </div>{" "}
+              </div>
+            ))}
+           
           </div>
-        </div>
-        <div className="flex text-secondary_text upppercase justify-between text-right">
-        <div className="flex gap-2 items-center">
-              <h5 className="leading-[1.06rem] text-sm">
-                Sus
-              </h5>{" "}
-              <span>
-                <InfoIcon className="inline" />
-              </span>
-            </div> <div className="flex gap-2 items-center">
-              <h5 className="leading-[1.06rem] text-sm">
-                NPS
-              </h5>{" "}
-              <span>
-                <InfoIcon className="inline" />
-              </span>
-            </div> <div className="flex gap-2 items-center">
-              <h5 className="leading-[1.06rem] text-sm">
-               XES
-              </h5>{" "}
-              <span>
-                <InfoIcon className="inline" />
-              </span>
-            </div>
         </div>
       </div>
     </div>

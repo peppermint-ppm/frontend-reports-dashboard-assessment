@@ -9,7 +9,7 @@ export const DeviceUsage = (props: Props) => {
       <div className="flex flex-col gap-1.5">
         <div className="flex justify-between items-center">
           <div className="flex gap-2 items-center">
-            <h5 className="text-sm leading-[1.06rem] font-medium">
+            <h5 className="lg:text-sm text-xs leading-[1.06rem] font-medium">
               Device usage
             </h5>{" "}
             <span>
@@ -18,7 +18,7 @@ export const DeviceUsage = (props: Props) => {
           </div>
           <Link
             href={"/"}
-            className="text-violet hover:opacity-80 duration-150"
+            className="text-violet text-xs lg:text-sm hover:opacity-80 duration-150"
           >
             Browser
           </Link>
@@ -27,11 +27,11 @@ export const DeviceUsage = (props: Props) => {
           return (
             <div className="flex justify-between text-secondary_text items-center">
               <div className="flex gap-2 items-center">
-                <h5 className="text-base leading-[1.60725rem] text-[#1A1F36] ">
+                <h5 className="lg:text-base text-xs leading-[1.60725rem] text-[#1A1F36] ">
                   {data.name}
                 </h5>{" "}
               </div>
-              <p className="text-secondary_text hover:opacity-80 duration-150">
+              <p className="text-secondary_text lg:text-base text-xs hover:opacity-80 duration-150">
                 {data.count}
               </p>
             </div>

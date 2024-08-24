@@ -26,7 +26,7 @@ const DynamicMap = ({ children, className, width, height, ...rest }) => {
   }, []);
 
   return (
-    <MapContainer className={"w-[36vw] h-[40vh]"} {...rest}>
+    <MapContainer className={"w-full h-[100%]  bg-white"} {...rest}>
       {children(ReactLeaflet, Leaflet)}
     </MapContainer>
   )
