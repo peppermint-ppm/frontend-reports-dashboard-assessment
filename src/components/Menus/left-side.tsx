@@ -2,12 +2,15 @@ import React, { useContext } from "react"
 import { useRouter } from "next/router"
 import { HomeIcon } from "../Icons/home-icon"
 import { ReportsIcon } from "../Icons/reports-icon"
+import { usePathname } from "next/navigation"
 
 type Props = {
   setOpen?:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const LeftSideMenu: React.FC<Props> = ({setOpen }) => {
+  const pathname= usePathname()
+
   const router = useRouter();
 
   return (
@@ -41,7 +44,7 @@ export const LeftSideMenu: React.FC<Props> = ({setOpen }) => {
             <HomeIcon
               className="h-[16px] w-[16px]"
               fill={"#4F566B"} />
-            <p className="text-[13px] text-[#1A1F36] font-normal">
+            <p className={`text-[13px] text-[#1A1F36] font-normal ${pathname=="/dashboard" && "text-violet"}`}>
               Dashboard
             </p>
           </li>
@@ -59,7 +62,7 @@ export const LeftSideMenu: React.FC<Props> = ({setOpen }) => {
               className="h-[16px] w-[16px]"
               fill={"#4F566B"}
             />
-            <p className="text-[13px] text-[#1A1F36] font-normal">
+            <p className={`text-[13px] text-[#1A1F36] font-normal ${pathname=="/dashboard/reports" && "text-violet"}`}>
               Reports
             </p>
           </li>
