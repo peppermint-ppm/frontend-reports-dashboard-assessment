@@ -159,17 +159,14 @@ export const DemographicsComponent = ({
                                 position={[Number(data.lat), Number(data.long)]}
                               >
                                 <Tooltip
-                                  position={[
-                                    Number(data.lat),
-                                    Number(data.long),
-                                  ]}
+                                 
                                 >
                                   {data.country}
                                   <span className="bg-success ml-2 p-1 rounded">
                                     {data.count}
                                   </span>
                                 </Tooltip>
-                                //{" "}
+                                {" "}
                               </Marker>
                             );
                           })}

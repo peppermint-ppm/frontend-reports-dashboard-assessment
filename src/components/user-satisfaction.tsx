@@ -69,15 +69,15 @@ export const UserSatisfaction = ({ metrics }: Props) => {
                 </h5>{" "}
                 <div className="flex flex-row lg:hidden lg:flex-col gap-1.5">
                   <div
-                    className={`   rounded font-medium text-xs  p-[2px_6px] ${
+                    className={`   rounded font-medium lg:text-xs text-[9px] whitespace-nowrap  p-[2px_6px] ${
                       getRemarksFrommetric(metric).bgColor
                     } ${getRemarksFrommetric(metric).textColor}`}
                   >
                     {getRemarksFrommetric(metric).text}
                   </div>
-                  <div className="flex gap-2 order-1 items-center">
+                  <div className="flex gap-2 order-1 w-full  items-center">
                     <h5 className="leading-[1.06rem] uppercase text-xs lg:text-sm">
-                      {getRemarksFrommetric(metric).name}
+                      {/* {getRemarksFrommetric(metric).name} */}
                     </h5>{" "}
                     <span>
                       <InfoIcon className="inline" />
