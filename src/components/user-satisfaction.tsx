@@ -25,6 +25,7 @@ export const UserSatisfaction = ({ metrics }: Props) => {
       return {
         text: "Grade B",
         name: getVariableName(value),
+        getPos: "lg:justify-start",
         bgColor: "bg-success",
         textColor: "text-[#0E6245]",
       };
@@ -32,6 +33,7 @@ export const UserSatisfaction = ({ metrics }: Props) => {
       return {
         text: "Good",
         name: getVariableName(value),
+        getPos: "lg:justify-center",
         bgColor: "bg-warning",
         textColor: "text-[#9C3F0F]",
       };
@@ -39,6 +41,7 @@ export const UserSatisfaction = ({ metrics }: Props) => {
     return {
       text: "Average",
       name: getVariableName(value),
+      getPos: "lg:justify-end",
       bgColor: "bg-warning",
       textColor: "text-[#9C3F0F]",
     };
@@ -59,15 +62,17 @@ export const UserSatisfaction = ({ metrics }: Props) => {
             </div>
           </div>
           <div className="flex flex-col xl:flex-row gap-6 justify-between xl:items-center">
-            {metricsArray.map((metric, index) => (
+            {metricsArray.reverse().map((metric, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between lg:justify-start   lg:max-w-[100px] flex-wrap gap-1.5"
+                className={`flex items-center  justify-between  w-full  lg:max-w-[100px] flex-wrap gap-1.5  ${
+                  getRemarksFrommetric(metric).getPos
+                } `}
               >
                 <h5 className="lg:text-xl text-sm  leading-[1.60725rem] text-[#1A1F36] font-medium">
                   {metric}
                 </h5>{" "}
-                <div className="flex flex-row lg:hidden lg:flex-col gap-1.5">
+                <div className="flex flex-row lg:hidden lg:flex-col  gap-1.5">
                   <div
                     className={`   rounded font-medium lg:text-xs text-[9px] whitespace-nowrap  p-[2px_6px] ${
                       getRemarksFrommetric(metric).bgColor
@@ -77,7 +82,7 @@ export const UserSatisfaction = ({ metrics }: Props) => {
                   </div>
                   <div className="flex gap-2 order-1 w-full  items-center">
                     <h5 className="leading-[1.06rem] uppercase text-xs lg:text-sm">
-                      {/* {getRemarksFrommetric(metric).name} */}
+                      {getRemarksFrommetric(metric).name}
                     </h5>{" "}
                     <span>
                       <InfoIcon className="inline" />
@@ -85,13 +90,17 @@ export const UserSatisfaction = ({ metrics }: Props) => {
                   </div>{" "}
                 </div>
                 <div
-                  className={`   rounded font-medium text-xs hidden lg:block p-[2px_6px] ${
+                  className={`   rounded font-medium text-xs hidden  lg:block p-[2px_6px] ${
                     getRemarksFrommetric(metric).bgColor
                   } ${getRemarksFrommetric(metric).textColor}`}
                 >
                   {getRemarksFrommetric(metric).text}
                 </div>
-                <div className="lg:flex gap-2 order-1 hidden  items-center">
+                <div
+                  className={`lg:flex gap-2 order-1 hidden w-full    items-center  ${
+                    getRemarksFrommetric(metric).getPos
+                  } `}
+                >
                   <h5 className="leading-[1.06rem] uppercase text-xs lg:text-sm">
                     {getRemarksFrommetric(metric).name}
                   </h5>{" "}
@@ -101,7 +110,6 @@ export const UserSatisfaction = ({ metrics }: Props) => {
                 </div>{" "}
               </div>
             ))}
-           
           </div>
         </div>
       </div>
