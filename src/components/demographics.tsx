@@ -16,12 +16,15 @@ import L, {
   TileLayer,
   Marker,
   Popup,
+  Tooltip,
 } from "leaflet";
 import {
   TileLayerProps,
   GeoJSONProps,
   MarkerProps,
   PopupProps,
+  
+  TooltipProps,
 } from "react-leaflet";
 import { GeoJsonObject, GeoJsonTypes } from "geojson";
 
@@ -29,6 +32,7 @@ import { GeoJsonObject, GeoJsonTypes } from "geojson";
 type TileLayerType = import("react").ForwardRefExoticComponent<
   TileLayerProps & import("react").RefAttributes<TileLayer>
 >;
+type ToolTipTYpe = import("react").ForwardRefExoticComponent<TooltipProps & import("react").RefAttributes<Tooltip>>;
 type GeoJsonType = import("react").ForwardRefExoticComponent<
   GeoJSONProps &
     import("react").RefAttributes<GeoJSON<any, import("geojson").Geometry>>
@@ -129,12 +133,14 @@ export const DemographicsComponent = ({
                         TileLayer,
                         Marker,
                         Popup,
+                        Tooltip,
                         GeoJSON,
                       }: {
                         TileLayer: TileLayerType;
                         Marker: MarkerType;
                         Popup: PopupType;
                         GeoJSON: GeoJsonType;
+                        Tooltip:ToolTipTYpe
                       }) => (
                         <>
                           <TileLayer
@@ -149,15 +155,10 @@ export const DemographicsComponent = ({
                           {locationBreakdown.map((data) => {
                             return (
                               <Marker
-                              // icon={L.divIcon({
-                              //   iconSize: [12, 12],
-                              //   iconAnchor: [12 / 2, 12 + 9],
-                              //   className: "mymarker",
-                              //   html: "😁",
-                              // })}
+                             
                                 position={[Number(data.lat), Number(data.long)]}
                               >
-                                <Popup
+                                <Tooltip
                                   position={[
                                     Number(data.lat),
                                     Number(data.long),
@@ -167,7 +168,7 @@ export const DemographicsComponent = ({
                                   <span className="bg-success ml-2 p-1 rounded">
                                     {data.count}
                                   </span>
-                                </Popup>
+                                </Tooltip>
                                 //{" "}
                               </Marker>
                             );

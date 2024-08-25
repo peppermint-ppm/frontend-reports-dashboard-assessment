@@ -18,7 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: 'white';
+  background: "white";
 }
 
 @layer utilities {
@@ -58,3 +58,17 @@ body {
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
 }
+
+.leaflet-container .leaflet-marker-pane img, .leaflet-container .leaflet-shadow-pane img, .leaflet-container .leaflet-tile-pane img, .leaflet-container img.leaflet-image-layer, .leaflet-container .leaflet-tile 
+{
+  
+  border: none !important;
+  /* width: 0 !important; */
+  width: 8px !important;
+  translate: 4px 8px;
+  content: url(/images/icons/info.svg);
+ 
+}
+/* .leaflet-container .leaflet-shadow-pane img:hover{
+  width: max-content !important;
+} */
